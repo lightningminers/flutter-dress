@@ -22,7 +22,9 @@
 - 主体颜色：rgb(245, 208, 56) #F5D038
 - 主体字体颜色：#fff
 
-![](./assets/app_01.jpeg)
+<div align=center>
+  <img src="./assets/app_01.jpeg" width="350"/>
+</div>
 
 ## 实现的技术特点
 
