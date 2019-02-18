@@ -26,9 +26,7 @@ class _HomePageState extends State<HomePage> {
         title: new Text(_selectedTitle),
         backgroundColor: DressThemeColor,
       ),
-      body: new Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

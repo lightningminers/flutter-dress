@@ -16,6 +16,7 @@
 - gh-pages branch API：[https://api.github.com/repos/komeiji-satori/Dress/branches/gh-pages](https://api.github.com/repos/komeiji-satori/Dress/branches/gh-pages)
 - 获取仓库下的内容：[https://api.github.com/repos/komeiji-satori/Dress/contents/](https://api.github.com/repos/komeiji-satori/Dress/contents/)
 - 获取具体的文件：[https://api.github.com/repos/komeiji-satori/Dress/contents/447f.Misaka](https://api.github.com/repos/komeiji-satori/Dress/contents/447f.Misaka)
+- 获取 flutter-dress 应用作者：[https://api.github.com/repos/icepy/flutter-dress/contributors](https://api.github.com/repos/icepy/flutter-dress/contributors)
 
 ## 手绘的UI和交互设计
 
