@@ -10,6 +10,8 @@
 
 Flutter Dress 是一个全新的 Flutter 工程，它利用了 [komeiji-satori/Dress](https://github.com/komeiji-satori/Dress) 的女装资源实现了一个 iOS 和 Android 客户端应用程序，方便大家在手机设备上查阅。
 
+请阅读 [应用设计文档](./doc/README.md)，重在参与。
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
@@ -22,5 +24,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
-
-## 

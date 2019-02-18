@@ -19,8 +19,10 @@
 
 ## 手绘的UI和交互设计
 
-主体颜色：rgb(245, 208, 56) #F5D038
-主体字体颜色：#fff
+- 主体颜色：rgb(245, 208, 56) #F5D038
+- 主体字体颜色：#fff
+
+![](./assets/app_01.jpeg)
 
 ## 实现的技术特点
 
@@ -30,3 +32,4 @@
 - 通过网络获取数据源
 - 对数据的清洗上设计合理的模式
 - 可能会添加一个 md 解析器
+- [https://pub.dartlang.org/packages/shared_preferences](https://pub.dartlang.org/packages/shared_preferences) 存储作者数据 和 图片地址数据
