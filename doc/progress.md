@@ -12,10 +12,11 @@
 
 ![](./assets/app_02.gif)
 
-**2019/02/19 19:30**
+**2019/02/19 21:30**
 
 - [x] 实践 DressPhotoDirsBlocData 来管理女装大佬列表的目录页面
 - [x] 实践简单渲染 ListView Dir Name
 - [x] 实践一个抽离的 Widget 传入 photoDir 和 onChanged
+- [x] 实践动态路由并且传递两个参数到新的页面
 
 ![](./assets/app_03.gif)
