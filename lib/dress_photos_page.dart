@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dress/bloc/BlocProvider.dart';
 import 'package:flutter_dress/bloc/DressPhotoDirsBlocData.dart';
 import 'package:flutter_dress/model/PhotoDir.dart';
+import 'package:flutter_dress/widgets/photo_dir.dart';
+import 'package:flutter_dress/shared/constants.dart';
 
 
 final test = 'API rate limit exceeded for xxx.xxx.xxx.xxx. (But here\'s the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)';
@@ -15,17 +17,38 @@ class DressPhotoDirsPage extends StatelessWidget {
       initialData: [],
       builder: (BuildContext context, AsyncSnapshot<List<PhotoDir>> snapshot){
         final data = snapshot.data;
-        return ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (BuildContext context, int index){
-            final photoDir = data[index];
-            return new Text(
-              photoDir.name
-            );
-          },
+        if(data.length > 0){
+          return _buildItems(data);
+        } else {
+          return _buildProgress();
+        }
+      },
+    );
+  }
+
+  Widget _buildItems(List<PhotoDir> data){
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (BuildContext context, int index){
+        final photoDir = data[index];
+        return new PhotoDirWidget(
+          photoDir: photoDir,
+          onChanged: _onTapPhotoDirHandler,
         );
       },
     );
+  }
+
+  Widget _buildProgress(){
+    return new CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation(
+        DressThemeColor
+      ),
+    );
+  }
+
+  void _onTapPhotoDirHandler(int index){
+
   }
 }
 

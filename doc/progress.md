@@ -8,12 +8,14 @@
 - [x] 实践处理网络请求和数据装载（JSON 和 定义 Author 模型）
 - [x] 实践布局 Widget 和 State
 - [x] 实践一个范型类来处理 Response
+- [x] 实践 Progress 在处理网络请求时提升等待的体验
 
 ![](./assets/app_02.gif)
 
 **2019/02/19 19:30**
 
-- [x] 实现 DressPhotoDirsBlocData 来管理女装大佬列表的目录页面
-- [x] 实现简单渲染 ListView Dir Name
+- [x] 实践 DressPhotoDirsBlocData 来管理女装大佬列表的目录页面
+- [x] 实践简单渲染 ListView Dir Name
+- [x] 实践一个抽离的 Widget 传入 photoDir 和 onChanged
 
 ![](./assets/app_03.gif)
