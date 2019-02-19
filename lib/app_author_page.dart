@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter_dress/model/Author.dart';
 import 'package:flutter_dress/model/ResponseData.dart';
 import 'package:flutter_dress/shared/constants.dart';
+import 'package:flutter_dress/widgets/ProgressWidget.dart';
 
 class AppAuthorPage extends StatefulWidget {
   AppAuthorPage({Key key}) : super(key: key);
@@ -41,19 +42,11 @@ class _AppAuthorPageState extends State<AppAuthorPage> {
       if(_authors.length > 0){
         return _buildItems();
       } else {
-        return _buildProgress();
+        return new ProgressWidget();
       }
     } else {
       return _buildErrorItems();
     }
-  }
-
-  Widget _buildProgress(){
-    return new CircularProgressIndicator(
-      valueColor: AlwaysStoppedAnimation(
-        DressThemeColor
-      ),
-    );
   }
 
   Widget _buildErrorItems(){
