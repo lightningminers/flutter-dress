@@ -10,3 +10,10 @@
 - [x] 实践一个范型类来处理 Response
 
 ![](./assets/app_02.gif)
+
+**2019/02/19 19:30**
+
+- [x] 实现 DressPhotoDirsBlocData 来管理女装大佬列表的目录页面
+- [x] 实现简单渲染 ListView Dir Name
+
+![](./assets/app_03.gif)

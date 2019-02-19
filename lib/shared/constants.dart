@@ -6,5 +6,6 @@ const DressFontColor = Colors.white;
 const AppAuthorText = '应用作者';
 const DressPhotoText = '女装大佬';
 const GithubContributorsURL = 'https://api.github.com/repos/icepy/flutter-dress/contributors';
+const GithubPhotoDirsURL = 'https://api.github.com/repos/komeiji-satori/Dress/contents/';
 const NetworkOK = 0;
 const NetworkFail = 1;
