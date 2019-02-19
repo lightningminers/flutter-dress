@@ -3,7 +3,6 @@ import 'package:flutter_dress/bloc/BlocProvider.dart';
 import 'package:flutter_dress/bloc/DressPhotoDirsBlocData.dart';
 import 'package:flutter_dress/model/PhotoDir.dart';
 import 'package:flutter_dress/widgets/PhotoDirWidget.dart';
-import 'package:flutter_dress/shared/constants.dart';
 import 'package:flutter_dress/photo_page.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
 
