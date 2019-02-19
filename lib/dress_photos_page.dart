@@ -4,11 +4,17 @@ import 'package:flutter_dress/bloc/DressPhotoDirsBlocData.dart';
 import 'package:flutter_dress/model/PhotoDir.dart';
 import 'package:flutter_dress/widgets/photo_dir.dart';
 import 'package:flutter_dress/shared/constants.dart';
+import 'package:flutter_dress/photo_page.dart';
 
 
 final test = 'API rate limit exceeded for xxx.xxx.xxx.xxx. (But here\'s the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)';
 
-class DressPhotoDirsPage extends StatelessWidget {
+class DressPhotoDirsPage extends StatefulWidget{
+  @override
+  DressPhotoDirsPageState createState() => new DressPhotoDirsPageState();
+}
+
+class DressPhotoDirsPageState extends State<DressPhotoDirsPage> {
   @override
   Widget build(BuildContext context) {
     final DressPhotoDirsBlocData bloc = BlocProvider.of<DressPhotoDirsBlocData>(context);
@@ -33,7 +39,18 @@ class DressPhotoDirsPage extends StatelessWidget {
         final photoDir = data[index];
         return new PhotoDirWidget(
           photoDir: photoDir,
-          onChanged: _onTapPhotoDirHandler,
+          onChanged: (){
+            Navigator.of(context).push(
+              new MaterialPageRoute(
+                builder: (BuildContext context){
+                  return PhotoPage(
+                    url: photoDir.url,
+                    dirName: photoDir.name,
+                  );
+                }
+              )
+            );
+          }
         );
       },
     );
@@ -45,10 +62,6 @@ class DressPhotoDirsPage extends StatelessWidget {
         DressThemeColor
       ),
     );
-  }
-
-  void _onTapPhotoDirHandler(int index){
-
   }
 }
 
