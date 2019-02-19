@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_dress/shared/constants.dart';
 import 'package:flutter_dress/model/Photo.dart';
 import 'package:flutter_dress/model/ResponseData.dart';
+import 'package:flutter_dress/widgets/ProgressWidget.dart';
 
 class PhotoPage extends StatefulWidget {
 
@@ -14,22 +15,25 @@ class PhotoPage extends StatefulWidget {
   final String dirName;
 
   @override
-  PhotoPageState createState() => new PhotoPageState(
+  _PhotoPageState createState() => new _PhotoPageState(
     url,
     dirName
   );
 }
 
-class PhotoPageState extends State<PhotoPage>{
+class _PhotoPageState extends State<PhotoPage>{
 
   final String _url;
   final String _dirName;
+  List<Photo> _photos = [];
 
-  PhotoPageState(this._url, this._dirName) : super();
+  _PhotoPageState(this._url, this._dirName) : super();
 
   @override
   void initState(){
     super.initState();
+    debugPrint('initState _APhotoPageState');
+    _getAsyncPhoto();
   }
 
   @override
@@ -46,8 +50,41 @@ class PhotoPageState extends State<PhotoPage>{
             },
           ),
         ),
-        body: new Padding(
-          padding: EdgeInsets.all(10.0),
+        body: new Center(
+          child: new Padding(
+            padding: EdgeInsets.all(10.0),
+            child: _photos.length > 0 ? _buildItems(context) :  ProgressWidget(),
+          )
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItems(BuildContext context){
+    return new GridView.count(
+      crossAxisCount: 2,
+      mainAxisSpacing: 5.0,
+      crossAxisSpacing: 4.0,
+      children: _photos.map((photo){
+        return _getGridViewItemUI(context, photo);
+      }).toList(),
+    );
+  }
+
+  Widget _getGridViewItemUI(BuildContext context, Photo photo) {
+    return InkWell(
+      onTap: () {
+        
+      },
+      child: Card(
+        elevation: 4.0,
+        child: Column(
+          children: <Widget>[
+            Image.network(
+              photo.imageURL,
+              fit: BoxFit.cover,
+            )
+          ],
         ),
       ),
     );
@@ -58,7 +95,9 @@ class PhotoPageState extends State<PhotoPage>{
     doingFuture.then((done){
       done.then((response){
         if (response.errorCode == NetworkOK) {
-
+          setState(() {
+            _photos = response.data;
+          });
         } else {
           
         }
