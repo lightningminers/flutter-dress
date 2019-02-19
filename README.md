@@ -12,7 +12,7 @@ Flutter Dress 是一个全新的 Flutter 工程，它利用 [komeiji-satori/Dres
 
 请阅读 [应用设计文档](./doc/README.md)，重在参与。
 
-请查阅 [应用完成进度表](./doc/progress.md)，把握时机。
+请阅读 [应用完成进度表](./doc/progress.md)，把握时机。
 
 ## Getting Started
 
