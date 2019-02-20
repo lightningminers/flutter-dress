@@ -148,22 +148,20 @@ class _AppAuthorPageState extends State<AppAuthorPage> {
   }
 
   void _getAsyncAuthors(){
-    Future<Future<ResponseData<List<Author>>>> doingFuture = new Future(_fetchContributors);
-    doingFuture.then((done){
-      done.then((response){
-        if (response.errorCode == NetworkOK) {
-          setState(() {
-            _authors = response.data;
-            _errorCode = NetworkOK;
-            _errorMessage = '';
-          });
-        } else {
-          setState(() {
-            _errorCode = response.errorCode;
-            _errorMessage = response.errorMessage;
-          });
-        }
-      });
+    Future<ResponseData<List<Author>>> doingFuture = new Future(_fetchContributors);
+    doingFuture.then((response){
+      if (response.errorCode == NetworkOK) {
+        setState(() {
+          _authors = response.data;
+          _errorCode = NetworkOK;
+          _errorMessage = '';
+        });
+      } else {
+        setState(() {
+          _errorCode = response.errorCode;
+          _errorMessage = response.errorMessage;
+        });
+      }
     });
   }
 

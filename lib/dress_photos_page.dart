@@ -6,7 +6,6 @@ import 'package:flutter_dress/widgets/PhotoDirWidget.dart';
 import 'package:flutter_dress/photo_page.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
 
-
 final test = 'API rate limit exceeded for xxx.xxx.xxx.xxx. (But here\'s the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)';
 
 class DressPhotoDirsPage extends StatefulWidget{

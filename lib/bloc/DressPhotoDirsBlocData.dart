@@ -34,15 +34,13 @@ class DressPhotoDirsBlocData implements BlocBase {
   }
 
   void _getAsyncAuthors(){
-    Future<Future<ResponseData<List<PhotoDir>>>> doingFuture = new Future(_fetchPhotoDirs);
-    doingFuture.then((done){
-      done.then((response){
-        if (response.errorCode == NetworkOK) {
-          _inputPhotoDirs.add(new BlocData(response.data, ActionUpdate));
-        } else {
-          
-        }
-      });
+    Future<ResponseData<List<PhotoDir>>> doingFuture = new Future(_fetchPhotoDirs);
+    doingFuture.then((response){
+      if (response.errorCode == NetworkOK) {
+        _inputPhotoDirs.add(new BlocData(response.data, ActionUpdate));
+      } else {
+        
+      }
     });
   }
 

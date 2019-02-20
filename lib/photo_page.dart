@@ -91,17 +91,15 @@ class _PhotoPageState extends State<PhotoPage>{
   }
 
   void _getAsyncPhoto(){
-    Future<Future<ResponseData<List<Photo>>>> doingFuture = new Future(_fetchPhoto);
-    doingFuture.then((done){
-      done.then((response){
-        if (response.errorCode == NetworkOK) {
-          setState(() {
-            _photos = response.data;
-          });
-        } else {
-          
-        }
-      });
+    Future<ResponseData<List<Photo>>> doingFuture = new Future(_fetchPhoto);
+    doingFuture.then((response){
+      if (response.errorCode == NetworkOK) {
+        setState(() {
+          _photos = response.data;
+        });
+      } else {
+        
+      }
     });
   }
 
