@@ -13,6 +13,8 @@
 - 资源仓库：[https://github.com/komeiji-satori/Dress](https://github.com/komeiji-satori/Dress)
 - 获取作者API：[https://api.github.com/users/komeiji-satori](https://api.github.com/users/komeiji-satori)
 - 获取仓库API：[https://api.github.com/repos/komeiji-satori/Dress](https://api.github.com/repos/komeiji-satori/Dress)
+- 获取仓库 issues ：[https://api.github.com/repos/komeiji-satori/Dress/issues](https://api.github.com/repos/komeiji-satori/Dress/issues)
+- 获取仓库 PR 参与者：[https://api.github.com/repos/komeiji-satori/Dress/contributors](https://api.github.com/repos/komeiji-satori/Dress/contributors)
 - gh-pages branch API：[https://api.github.com/repos/komeiji-satori/Dress/branches/gh-pages](https://api.github.com/repos/komeiji-satori/Dress/branches/gh-pages)
 - 获取仓库下的内容：[https://api.github.com/repos/komeiji-satori/Dress/contents/](https://api.github.com/repos/komeiji-satori/Dress/contents/)
 - 获取具体的文件：[https://api.github.com/repos/komeiji-satori/Dress/contents/447f.Misaka](https://api.github.com/repos/komeiji-satori/Dress/contents/447f.Misaka)
