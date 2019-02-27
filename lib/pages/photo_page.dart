@@ -74,7 +74,7 @@ class _PhotoPageState extends State<PhotoPage>{
   Widget _getGridViewItemUI(BuildContext context, Photo photo) {
     return InkWell(
       onTap: () {
-        
+
       },
       child: Card(
         elevation: 4.0,
@@ -98,7 +98,7 @@ class _PhotoPageState extends State<PhotoPage>{
           _photos = response.data;
         });
       } else {
-        
+
       }
     });
   }

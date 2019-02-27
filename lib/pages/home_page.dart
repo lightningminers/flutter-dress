@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dress/shared/constants.dart';
-import 'package:flutter_dress/app_author_page.dart';
-import 'package:flutter_dress/dress_photos_page.dart';
+import 'package:flutter_dress/pages/app_author_page.dart';
+import 'package:flutter_dress/pages/dress_photos_page.dart';
+import 'package:flutter_dress/pages/issues_page.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   String _selectedTitle = DressPhotoText;
   final _widgetOptions = [
     DressPhotosPage(),
+    IssuesPage(),
     AppAuthorPage(),
   ];
 
@@ -25,6 +27,14 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         title: new Text(_selectedTitle),
         backgroundColor: DressThemeColor,
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.search),
+            onPressed: (){
+              Navigator.of(context).pushNamed("/search");
+            },
+          )
+        ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -32,6 +42,11 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: new Icon(Icons.photo),
             title: new Text(DressPhotoText),
+            backgroundColor: DressThemeColor
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.attach_money),
+            title: new Text(IssuesText),
             backgroundColor: DressThemeColor
           ),
           BottomNavigationBarItem(
@@ -52,6 +67,9 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
       switch (index) {
         case 1:
+          _selectedTitle = IssuesText;
+          break;
+        case 2:
           _selectedTitle = AppAuthorText;
           break;
         default:

@@ -38,3 +38,4 @@
 - 对数据的清洗上设计合理的模式
 - 可能会添加一个 md 解析器
 - [https://pub.dartlang.org/packages/shared_preferences](https://pub.dartlang.org/packages/shared_preferences) 存储作者数据 和 图片地址数据
+- [https://pub.dartlang.org/packages/flutter_webview_plugin#-readme-tab-](https://pub.dartlang.org/packages/flutter_webview_plugin#-readme-tab-) 打开 WebView 提供隐私搜索
