@@ -22,11 +22,6 @@ class IssuesBlocData implements BlocBase {
   StreamController<IssuesContainer> openIssuesControl = StreamController();
   Stream get openIssuesStream => openIssuesControl.stream;
 
-  IssuesBlocData() {
-    getIssuesData(IssuesType.open);
-    Timer.run(() => getIssuesData(IssuesType.closed));
-  }
-
   getIssuesData(IssuesType type) {
     get('${GithubIssuesURL}?state=${typeValue[type.index]}').then((data) {
       if(data != null) {

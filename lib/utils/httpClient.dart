@@ -9,7 +9,13 @@ Future get(String url) async {
     var request = await httpClient.getUrl(Uri.parse(url));
     var response = await request.close();
     String data = await response.transform(utf8.decoder).join();
-    return jsonDecode(data);
+    var _data = jsonDecode(data);
+    if(_data is Map && _data['message'] is String) {
+      print(_data['message']);
+      return null;
+    } else {
+      return _data;
+    }
   } catch (e) {
     debugPrint(e.message);
   }

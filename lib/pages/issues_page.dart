@@ -3,6 +3,7 @@ import 'package:flutter_dress/model/Issue.dart';
 import 'package:flutter_dress/bloc/BlocProvider.dart';
 import 'package:flutter_dress/bloc/IssuesBlocData.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
+import 'package:flutter_dress/shared/constants.dart';
 
 class IssuesPage extends StatelessWidget {
   @override
@@ -13,17 +14,59 @@ class IssuesPage extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         child: Container(
             foregroundDecoration:
-                BoxDecoration(border: Border.all(color: Colors.black12)),
+                BoxDecoration(border: Border.all(color: AuthorBorderColor)),
             child: MyTab()),
       ),
     );
   }
 }
 
-class MyTab extends StatelessWidget {
+class MyTab extends StatefulWidget {
+  @override
+  MyTabState createState() => MyTabState();
+}
+
+class MyTabState extends State {
+  int _activeIndex = 0;
+
+  Widget _renderTab() {
+    return TabBar(
+      labelPadding: EdgeInsets.all(0.0),
+      indicatorColor: Colors.transparent,
+      onTap: (int index) {
+        setState(() {
+          _activeIndex = index;
+        });
+      },
+      tabs: typeValue.map<Widget>((String value) {
+        bool active = typeValue.indexOf(value) == _activeIndex;
+        List colors = [Colors.white, DressThemeColor];
+        if (active) {
+          colors = colors.reversed.toList();
+        }
+        return Container(
+          width: 300.0,
+          color: colors[0],
+          child: Tab(
+            child: Text(
+              value,
+              style: TextStyle(color: colors[1]),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<IssuesBlocData>(context);
+    bloc.getIssuesData(IssuesType.open);
     return StreamBuilder(
         stream: bloc.openIssuesStream,
         initialData: IssuesContainer(),
@@ -31,21 +74,11 @@ class MyTab extends StatelessWidget {
           List<Issue> openIssues = snapshot.data.openIssues;
           List<Issue> closedIssues = snapshot.data.closedIssues;
           return DefaultTabController(
-              length: 2,
+              length: typeValue.length,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  TabBar(
-                    labelColor: Colors.blue,
-                    tabs: <Widget>[
-                      Tab(
-                        text: 'open',
-                      ),
-                      Tab(
-                        text: 'closed',
-                      )
-                    ],
-                  ),
+                  _renderTab(),
                   Expanded(
                     child: TabBarView(
                       children: <Widget>[
@@ -69,26 +102,41 @@ class IssuesView extends StatelessWidget {
 
   IssuesView({@required this.issues});
 
+  List<Widget> _renderRowItem(Issue issue) {
+    List<Widget> list = [];
+
+    if (issue.user_avatar != null) {
+      list.add(Padding(
+        padding: EdgeInsets.only(right: 8.0),
+        child: CircleAvatar(
+          backgroundImage: NetworkImage(issue.user_avatar),
+        ),
+      ));
+    }
+    list.add(Expanded(
+      child: Text(
+        issue.title,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ));
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (issues.length > 0) {
       return Container(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView(
           children: issues.map<Widget>((Issue value) {
             return Container(
               height: 50,
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(bottom: 2.0),
-              foregroundDecoration: BoxDecoration(
-                border: Border.all(color: Colors.black12)
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              margin: EdgeInsets.symmetric(vertical: 5.0),
+              foregroundDecoration:
+                  BoxDecoration(border: Border.all(color: Colors.black12)),
               child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(value.title, overflow: TextOverflow.ellipsis,),
-                  )
-                ],
+                children: _renderRowItem(value),
               ),
             );
           }).toList(),
