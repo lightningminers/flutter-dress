@@ -1,8 +1,8 @@
 class Issue {
   String title;
-  String user_avatar;
+  String userAvatar;
 
   Issue.fromJSON(Map<String, dynamic> json)
     : title = json['title'],
-    user_avatar = json['user']['avatar_url'];
+    userAvatar = json['user']['avatar_url'];
 }

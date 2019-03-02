@@ -23,14 +23,12 @@ class IssuesBlocData implements BlocBase {
   Stream get openIssuesStream => openIssuesControl.stream;
 
   getIssuesData(IssuesType type) {
-    get('${GithubIssuesURL}?state=${typeValue[type.index]}').then((data) {
-      if(data != null) {
+    httpGet<List>('$GithubIssuesURL?state=${typeValue[type.index]}').then((response) {
+      if (response.status == NetworkOK) {
         IssuesContainer typeData = IssuesContainer();
-
-        List<Issue> _formatData = data.map<Issue>((value) {
+        List<Issue> _formatData = response.data.map<Issue>((value) {
           return Issue.fromJSON(value);
         }).toList();
-
         switch (type) {
           case IssuesType.open:
             typeData.openIssues = _formatData;

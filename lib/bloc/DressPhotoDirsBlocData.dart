@@ -4,8 +4,8 @@ import 'dart:async';
 import 'package:flutter_dress/bloc/BlocBase.dart';
 import 'package:flutter_dress/bloc/BlocData.dart';
 import 'package:flutter_dress/model/PhotoDir.dart';
-import 'package:flutter_dress/model/ResponseData.dart';
 import 'package:flutter_dress/shared/constants.dart';
+import 'package:flutter_dress/utils/httpClient.dart';
 
 const ActionUpdate = 'ActionUpdate';
 const ActionError = 'ActionError';
@@ -34,29 +34,16 @@ class DressPhotoDirsBlocData implements BlocBase {
   }
 
   void _getAsyncAuthors(){
-    Future<ResponseData<List<PhotoDir>>> doingFuture = new Future(_fetchPhotoDirs);
-    doingFuture.then((response){
-      if (response.errorCode == NetworkOK) {
-        _inputPhotoDirs.add(new BlocData(response.data, ActionUpdate));
+    httpGet<List>(GithubPhotoDirsURL).then((response){
+      if(response.status == NetworkOK){
+        final photoDirs  = response.data.map<PhotoDir>((value){
+          return PhotoDir.fromJSON(value);
+        }).toList();
+        _inputPhotoDirs.add(new BlocData(photoDirs, ActionUpdate));
       } else {
-        
+        // error
       }
     });
-  }
-
-  Future<ResponseData<List<PhotoDir>>> _fetchPhotoDirs() async {
-    var httpClient = new HttpClient();
-    var request = await httpClient.getUrl(Uri.parse(GithubPhotoDirsURL));
-    var response = await request.close();
-    var body = await response.transform(utf8.decoder).join();
-    var data = jsonDecode(body);
-    if (data is List) {
-      return new ResponseData(data.map<PhotoDir>((value){
-        return PhotoDir.fromJSON(value);
-      }).toList(), NetworkOK, '');
-    } else {
-      return new ResponseData([], NetworkFail, data['message']);
-    }
   }
 
   void dispose(){

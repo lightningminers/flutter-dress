@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'dart:ui';
-import 'dart:convert';
-import 'dart:async';
 import 'package:flutter_dress/model/Author.dart';
-import 'package:flutter_dress/model/ResponseData.dart';
 import 'package:flutter_dress/shared/constants.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
+import 'package:flutter_dress/utils/httpClient.dart';
 
 class AppAuthorPage extends StatefulWidget {
   AppAuthorPage({Key key}) : super(key: key);
@@ -63,7 +60,7 @@ class _AppAuthorPageState extends State<AppAuthorPage> {
           new Expanded(
             flex: 1,
             child: new Text(
-              _errorMessage, 
+              _errorMessage,
               style: new TextStyle(
                 color: Colors.redAccent
               ),
@@ -148,36 +145,22 @@ class _AppAuthorPageState extends State<AppAuthorPage> {
   }
 
   void _getAsyncAuthors(){
-    Future<ResponseData<List<Author>>> doingFuture = new Future(_fetchContributors);
-    doingFuture.then((response){
-      if (response.errorCode == NetworkOK) {
+    httpGet<List>(GithubContributorsURL).then((response){
+      if (response.status == NetworkOK) {
+        final authors = response.data.map<Author>((value){
+          return Author.fromJSON(value);
+        }).toList();
         setState(() {
-          _authors = response.data;
-          _errorCode = NetworkOK;
+          _authors = authors;
+          _errorCode = response.status;
           _errorMessage = '';
         });
       } else {
         setState(() {
-          _errorCode = response.errorCode;
+          _errorCode = response.status;
           _errorMessage = response.errorMessage;
         });
       }
     });
   }
-
-  Future<ResponseData<List<Author>>> _fetchContributors() async {
-    var httpClient = new HttpClient();
-    var request = await httpClient.getUrl(Uri.parse(GithubContributorsURL));
-    var response = await request.close();
-    var body = await response.transform(utf8.decoder).join();
-    var data = jsonDecode(body);
-    if (data is List) {
-      return new ResponseData(data.map<Author>((value){
-        return Author.fromJSON(value);
-      }).toList(), NetworkOK, '');
-    } else {
-      return new ResponseData([], NetworkFail, data['message']);
-    }
-  }
-
 }

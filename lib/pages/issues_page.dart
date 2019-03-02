@@ -105,11 +105,11 @@ class IssuesView extends StatelessWidget {
   List<Widget> _renderRowItem(Issue issue) {
     List<Widget> list = [];
 
-    if (issue.user_avatar != null) {
+    if (issue.userAvatar != null) {
       list.add(Padding(
         padding: EdgeInsets.only(right: 8.0),
         child: CircleAvatar(
-          backgroundImage: NetworkImage(issue.user_avatar),
+          backgroundImage: NetworkImage(issue.userAvatar),
         ),
       ));
     }

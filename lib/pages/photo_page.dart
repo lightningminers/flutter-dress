@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'dart:io';
-import 'dart:convert';
 import 'package:flutter_dress/shared/constants.dart';
 import 'package:flutter_dress/model/Photo.dart';
-import 'package:flutter_dress/model/ResponseData.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
+import 'package:flutter_dress/utils/httpClient.dart';
 
 class PhotoPage extends StatefulWidget {
 
@@ -91,30 +88,17 @@ class _PhotoPageState extends State<PhotoPage>{
   }
 
   void _getAsyncPhoto(){
-    Future<ResponseData<List<Photo>>> doingFuture = new Future(_fetchPhoto);
-    doingFuture.then((response){
-      if (response.errorCode == NetworkOK) {
+    httpGet<List>(_url).then((response){
+      if (response.status == NetworkOK) {
+        final photos = response.data.map<Photo>((value){
+          return Photo.fromJSON(value);
+        }).toList();
         setState(() {
-          _photos = response.data;
+          _photos = photos;
         });
       } else {
-
+        // error
       }
     });
-  }
-
-  Future<ResponseData<List<Photo>>> _fetchPhoto() async {
-    var httpClient = new HttpClient();
-    var request = await httpClient.getUrl(Uri.parse(_url));
-    var response = await request.close();
-    var body = await response.transform(utf8.decoder).join();
-    var data = jsonDecode(body);
-    if (data is List) {
-      return new ResponseData(data.map<Photo>((value){
-        return Photo.fromJSON(value);
-      }).toList(), NetworkOK, '');
-    } else {
-      return new ResponseData([], NetworkFail, data['message']);
-    }
   }
 }
