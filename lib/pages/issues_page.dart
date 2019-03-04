@@ -5,6 +5,7 @@ import 'package:flutter_dress/bloc/IssuesBlocData.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
 import 'package:flutter_dress/shared/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_dress/widgets/TabsWidget.dart';
 
 class IssuesPage extends StatelessWidget {
   @override
@@ -22,48 +23,7 @@ class IssuesPage extends StatelessWidget {
   }
 }
 
-class MyTab extends StatefulWidget {
-  @override
-  MyTabState createState() => MyTabState();
-}
-
-class MyTabState extends State {
-  int _activeIndex = 0;
-
-  Widget _renderTab() {
-    return TabBar(
-      labelPadding: EdgeInsets.all(0.0),
-      indicatorColor: Colors.transparent,
-      onTap: (int index) {
-        setState(() {
-          _activeIndex = index;
-        });
-      },
-      tabs: typeValue.map<Widget>((String value) {
-        bool active = typeValue.indexOf(value) == _activeIndex;
-        List colors = [Colors.white, DressThemeColor];
-        if (active) {
-          colors = colors.reversed.toList();
-        }
-        return Container(
-          width: 300.0,
-          color: colors[0],
-          child: Tab(
-            child: Text(
-              value,
-              style: TextStyle(color: colors[1]),
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MyTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<IssuesBlocData>(context);
@@ -74,26 +34,20 @@ class MyTabState extends State {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           List<Issue> openIssues = snapshot.data.openIssues;
           List<Issue> closedIssues = snapshot.data.closedIssues;
-          return DefaultTabController(
-              length: typeValue.length,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  _renderTab(),
-                  Expanded(
-                    child: TabBarView(
-                      children: <Widget>[
-                        IssuesView(
-                          issues: openIssues,
-                        ),
-                        IssuesView(
-                          issues: closedIssues,
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ));
+
+          return TabsWidget(
+            tabs: typeValue,
+            child: TabBarView(
+              children: <Widget>[
+                IssuesView(
+                  issues: openIssues,
+                ),
+                IssuesView(
+                  issues: closedIssues,
+                )
+              ],
+            ),
+          );
         });
   }
 }
@@ -103,20 +57,16 @@ class IssuesView extends StatelessWidget {
 
   IssuesView({@required this.issues});
 
-  List<Widget> _renderRowItem(Issue issue) {
-    List<Widget> list = [];
-
-    list.add(Expanded(
-      child: Text(
-        issue.title,
-        overflow: TextOverflow.ellipsis,
-      ),
-    ));
-    return list;
+  Widget _renderRowItem(Issue issue) {
+    return Text(
+      issue.title,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   Widget _renderOtherInfo(Issue issue) {
-    String time = DateFormat('y/M/d H:m').format(DateTime.parse(issue.createdAt));
+    String time =
+        DateFormat('y/M/d H:m').format(DateTime.parse(issue.createdAt));
     return Text(
       '#${issue.number} ${time} by ${issue.login}',
       overflow: TextOverflow.ellipsis,
@@ -149,9 +99,7 @@ class IssuesView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          Row(
-                            children: _renderRowItem(value),
-                          ),
+                          _renderRowItem(value),
                           _renderOtherInfo(value)
                         ],
                       ),
