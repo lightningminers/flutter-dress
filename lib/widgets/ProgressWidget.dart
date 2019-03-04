@@ -4,9 +4,9 @@ import 'package:flutter_dress/shared/constants.dart';
 class ProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new CircularProgressIndicator(
-      valueColor: AlwaysStoppedAnimation(
-        DressThemeColor
+    return Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation(DressThemeColor),
       ),
     );
   }
