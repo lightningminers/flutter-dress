@@ -4,6 +4,7 @@ import 'package:flutter_dress/bloc/BlocProvider.dart';
 import 'package:flutter_dress/bloc/IssuesBlocData.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
 import 'package:flutter_dress/shared/constants.dart';
+import 'package:intl/intl.dart';
 
 class IssuesPage extends StatelessWidget {
   @override
@@ -105,14 +106,6 @@ class IssuesView extends StatelessWidget {
   List<Widget> _renderRowItem(Issue issue) {
     List<Widget> list = [];
 
-    if (issue.userAvatar != null) {
-      list.add(Padding(
-        padding: EdgeInsets.only(right: 8.0),
-        child: CircleAvatar(
-          backgroundImage: NetworkImage(issue.userAvatar),
-        ),
-      ));
-    }
     list.add(Expanded(
       child: Text(
         issue.title,
@@ -120,6 +113,14 @@ class IssuesView extends StatelessWidget {
       ),
     ));
     return list;
+  }
+
+  Widget _renderOtherInfo(Issue issue) {
+    String time = DateFormat.yMd().format(DateTime.parse(issue.createdAt));
+    return Text(
+      '#${issue.number} ${time} by ${issue.login}',
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   @override
@@ -130,15 +131,33 @@ class IssuesView extends StatelessWidget {
         child: ListView(
           children: issues.map<Widget>((Issue value) {
             return Container(
-              height: 50,
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              margin: EdgeInsets.symmetric(vertical: 5.0),
-              foregroundDecoration:
-                  BoxDecoration(border: Border.all(color: Colors.black12)),
-              child: Row(
-                children: _renderRowItem(value),
-              ),
-            );
+                height: 50,
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                margin: EdgeInsets.symmetric(vertical: 5.0),
+                foregroundDecoration:
+                    BoxDecoration(border: Border.all(color: Colors.black12)),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(value.userAvatar),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: _renderRowItem(value),
+                          ),
+                          _renderOtherInfo(value)
+                        ],
+                      ),
+                    )
+                  ],
+                ));
           }).toList(),
         ),
       );
