@@ -116,7 +116,7 @@ class IssuesView extends StatelessWidget {
   }
 
   Widget _renderOtherInfo(Issue issue) {
-    String time = DateFormat.yMd().format(DateTime.parse(issue.createdAt));
+    String time = DateFormat('y/M/d H:m').format(DateTime.parse(issue.createdAt));
     return Text(
       '#${issue.number} ${time} by ${issue.login}',
       overflow: TextOverflow.ellipsis,
@@ -147,7 +147,7 @@ class IssuesView extends StatelessWidget {
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           Row(
                             children: _renderRowItem(value),
