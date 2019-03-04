@@ -10,5 +10,6 @@ const LeakzeroSearch = '秘迹搜';
 const GithubContributorsURL = 'https://api.github.com/repos/icepy/flutter-dress/contributors';
 const GithubPhotoDirsURL = 'https://api.github.com/repos/komeiji-satori/Dress/contents/';
 const GithubIssuesURL ='https://api.github.com/repos/komeiji-satori/Dress/issues';
+const GithubDressPR ='https://api.github.com/repos/komeiji-satori/Dress/contributors';
 const NetworkOK = 0;
 const NetworkFail = 1;
