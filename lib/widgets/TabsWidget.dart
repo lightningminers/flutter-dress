@@ -31,6 +31,7 @@ class TabsWidgetState extends State<TabsWidget> {
 
   Widget _renderTabs(){
     return TabBar(
+      labelPadding: EdgeInsets.all(0.0),
       indicatorColor: Colors.transparent,
       onTap: (int index){
         setState(() {
@@ -47,7 +48,7 @@ class TabsWidgetState extends State<TabsWidget> {
           colors = colors.reversed.toList();
         }
         return Container(
-          width: 300.0,
+          constraints: BoxConstraints.expand(height: 50.0),
           color: colors[0],
           child: Tab(
             child: Text(
