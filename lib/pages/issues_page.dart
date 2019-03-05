@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_daydart/flutter_daydart.dart';
 import 'package:flutter_dress/model/Issue.dart';
 import 'package:flutter_dress/bloc/BlocProvider.dart';
 import 'package:flutter_dress/bloc/IssuesBlocData.dart';
 import 'package:flutter_dress/widgets/ProgressWidget.dart';
 import 'package:flutter_dress/shared/constants.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_dress/widgets/TabsWidget.dart';
 
 class IssuesPage extends StatelessWidget {
@@ -65,10 +65,9 @@ class IssuesView extends StatelessWidget {
   }
 
   Widget _renderOtherInfo(Issue issue) {
-    String time =
-        DateFormat('y/M/d H:m').format(DateTime.parse(issue.createdAt));
+    final time = DayDart.fromString(issue.createdAt).format();
     return Text(
-      '#${issue.number} ${time} by ${issue.login}',
+      '#${issue.number} $time by ${issue.login}',
       overflow: TextOverflow.ellipsis,
     );
   }

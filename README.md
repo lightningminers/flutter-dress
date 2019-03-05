@@ -26,6 +26,6 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
 
-## ⚠️提醒
+## ⚠️ 提醒
 
 由于 Github 对 API 调用的限制，未经授权验证的 API 调用被限制在60次/1H（授权验证之后的调用频率为5000次/1H），具体参考 https://developer.github.com/v3/#rate-limiting ，Flutter Dress 没有实现 Github 的授权验证，因此在使用的过程中注意刷新频率。

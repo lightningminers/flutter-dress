@@ -21,7 +21,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.0
   flutter_webview_plugin: ^0.3.0+2
-  intl: ^0.15.7
+  flutter_daydart: ^0.0.3
 
 dev_dependencies:
   flutter_test:
