@@ -23,7 +23,7 @@ class DressPhotoDirsPageState extends State<DressPhotoDirsPage> {
       builder: (BuildContext context, AsyncSnapshot<List<PhotoDir>> snapshot){
         final data = snapshot.data;
         if(data.length > 0){
-          return _buildItems(data);
+          return _buildItems(data, bloc);
         } else {
           return new ProgressWidget();
         }
@@ -31,12 +31,13 @@ class DressPhotoDirsPageState extends State<DressPhotoDirsPage> {
     );
   }
 
-  Widget _buildItems(List<PhotoDir> data){
+  Widget _buildItems(List<PhotoDir> data, DressPhotoDirsBlocData bloc){
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index){
         final photoDir = data[index];
         return new PhotoDirWidget(
+          index: index,
           photoDir: photoDir,
           onChanged: (){
             Navigator.of(context).push(
@@ -49,7 +50,10 @@ class DressPhotoDirsPageState extends State<DressPhotoDirsPage> {
                 }
               )
             );
-          }
+          },
+          onTapCollections: (_, int index){
+            bloc.toggleIndexCollections(index);
+          },
         );
       },
     );

@@ -1,13 +1,13 @@
-import 'dart:io';
-import 'dart:convert';
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dress/bloc/BlocBase.dart';
 import 'package:flutter_dress/bloc/BlocData.dart';
 import 'package:flutter_dress/model/PhotoDir.dart';
 import 'package:flutter_dress/shared/constants.dart';
 import 'package:flutter_dress/utils/httpClient.dart';
 
-const ActionUpdate = 'ActionUpdate';
+const ActionInit = 'ActionInit';
+const ActionToggle = 'ActionToggle';
 const ActionError = 'ActionError';
 
 class DressPhotoDirsBlocData implements BlocBase {
@@ -23,14 +23,29 @@ class DressPhotoDirsBlocData implements BlocBase {
     _actionController.stream.listen(_handleLogic);
   }
 
-  void _handleLogic(BlocData<List<PhotoDir>> blocData){
+  void _handleLogic(BlocData blocData){
     switch (blocData.action) {
-      case ActionUpdate:
-        _photoDirs = blocData.data.where((v) => v.type == 'dir').toList();
+      case ActionInit:
+        _photoDirs = _removeTypeisDir(blocData.data);
+        break;
+      case ActionToggle:
+        _photoDirs = _toggleIndex(blocData.params);
         break;
       default:
     }
     _inAdd.add(_photoDirs);
+  }
+
+  List<PhotoDir> _removeTypeisDir(List<PhotoDir> data){
+    return data.where((v) => v.type == 'dir').toList();
+  }
+
+  List<PhotoDir> _toggleIndex(int params){
+    final photoDir = _photoDirs.removeAt(params);
+    final c = photoDir.collections;
+    photoDir.collections = !c;
+    _photoDirs.insert(0, photoDir);
+    return _photoDirs;
   }
 
   void _getAsyncAuthors(){
@@ -39,11 +54,21 @@ class DressPhotoDirsBlocData implements BlocBase {
         final photoDirs  = response.data.map<PhotoDir>((value){
           return PhotoDir.fromJSON(value);
         }).toList();
-        _inputPhotoDirs.add(new BlocData(photoDirs, ActionUpdate));
+        _inputPhotoDirs.add(new BlocData(
+          ActionInit,
+          data: photoDirs,
+        ));
       } else {
         // error
       }
     });
+  }
+
+  void toggleIndexCollections(int index){
+    _inputPhotoDirs.add(new BlocData(
+      ActionToggle,
+      params: index
+    ));
   }
 
   void dispose(){
